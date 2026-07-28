@@ -36,9 +36,11 @@ jobs:
       # Install dependencies with `pip`
       - name: Install requirements
         run: |
-          python3 -m pip install --upgrade pip setuptools wheel
+          # pybadges 3.0.0 still imports pkg_resources, which was removed
+          # from setuptools 82. Keep the last compatible setuptools series.
+          python3 -m pip install --upgrade pip "setuptools<82"
           python3 -m pip install -r requirements.txt
-          pip install -e .
+          python3 -m pip install -e .
 
       - name: create env file
         run: |
